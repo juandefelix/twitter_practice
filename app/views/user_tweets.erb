@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Twitter API Practice</h1>
+  <p>Recent 10 Tweets for <%= @user.user_name %></p>
+  <ul>
+    <%@tweets.each do |tweet|%>
+    <li><%= tweet.content %> </li>
+    <% end %>
+  </ul>
+</div>
