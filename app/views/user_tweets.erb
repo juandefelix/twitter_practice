@@ -1,9 +1,36 @@
 <div class="container">
   <h1>Twitter API Practice</h1>
-  <p>Recent 10 Tweets for <%= @user.user_name %></p>
-  <ul>
-    <%@tweets.each do |tweet|%>
-    <li><%= tweet.content %> </li>
-    <% end %>
-  </ul>
+  <div id='tweets_results'>
+    <h1>Please wait while loading</h1>
+    <img src="/ajax-loader.gif" id="loader">
+    <p id="user-name" data-user-name="<%=params[:username]%>">Recent 10 Tweets for <%= params[:username] %></p>
+    <ul id="tweets">
+
+    </ul>
+  </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      type: 'post',
+      url: '/username',
+      data: ({userName: $("#user-name").data("user-name")}),
+      success: function(e){
+        console.log("SUUUUCCCCEEEEESSSSSS")
+        console.log(e);
+        info = e;
+        $("#loader").hide();
+        for(x = 0; x < e.length; x++){
+          $('ul').append('<li>' + e[x] + '</li>')
+        }
+      },
+      error: function(e){
+        console.log("BIG ERROR");
+        console.log(e);
+      },
+      dataType: 'json'
+    })
+
+  });
+</script>
