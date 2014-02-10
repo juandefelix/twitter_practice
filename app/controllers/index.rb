@@ -9,10 +9,8 @@ end
 
 get '/:username' do
   @user = TwitterUser.find_by_user_name(params[:username])
-  if @user.tweets.empty?
-    @user.fetch_tweets!
-  end
+  @user.fetch_tweets!
 
-  @tweets = @user.tweets.limit(10)
+  @tweets = @user.tweets.last(10).reverse
   erb :user_tweets
 end
